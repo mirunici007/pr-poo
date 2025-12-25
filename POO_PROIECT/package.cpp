@@ -1,0 +1,47 @@
+//
+// Created by HP-15S on 12/24/2025.
+//
+#include <iostream>
+
+#include "package.h"
+
+Position basePosition(0,0);
+
+Package::Package(): destPosition(basePosition.getPositionX(),
+                       basePosition.getPositionY()) {
+    this->reward = 200 + rand() % 601;
+    this->deadline = 10+ rand() % 11;
+
+    this->late = false;
+    this->delivered = false;
+
+    destPosition.setPosition(basePosition.getPositionX(), basePosition.getPositionY());
+}
+
+void Position::setPosition(int x, int y) {
+    this->positionX = x;
+    this->positionY = y;
+}
+
+int Position::getPositionX() const {
+    return positionX;
+}
+
+int Position::getPositionY() const {
+    return positionY;
+}
+
+
+void Package::markDelivered() {
+    this->delivered = true;
+}
+void Package::markLate() {
+    this->late = true;
+}
+bool Package::checkLate() {
+    if (this->currentTick - this->spawnTick > this->deadline) {
+        this->late = true;
+        return true;
+    }
+    return false;
+}
